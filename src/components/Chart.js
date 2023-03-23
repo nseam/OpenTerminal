@@ -4,14 +4,59 @@
  * - https://www.tradingview.com/lightweight-charts/
  */
 
+console.log ('before imports');
+
 import styles from './Chart.module.css'
 import React, {useRef} from "react";
 import {createChart} from 'lightweight-charts';
+import {Test, run} from 'fx31337-wasm'
+
+class Api extends Test {
+  run(lib) {
+    console.log(`Starting Api...`);
+
+    const tickProvider = new lib.Indi_TickProvider();
+
+    const tick1 = new lib.TickTAB();
+    const tick2 = new lib.TickTAB();
+    const tick3 = new lib.TickTAB();
+
+    tick1.time_ms = BigInt(0);
+    tick1.ask = 1.0;
+    tick1.bid = 1.1;
+
+    tick2.time_ms = BigInt(100);
+    tick2.ask = 1.1;
+    tick2.bid = 1.2;
+
+    tick3.time_ms = BigInt(250);
+    tick3.ask = 1.2;
+    tick3.bid = 1.3;
+
+    const ticks = new lib.TickTABArray();
+
+    ticks.Push(tick1);
+    ticks.Push(tick2);
+    ticks.Push(tick3);
+
+    console.log(`There are: ${ticks.Size()} ticks added.`);
+    console.log(`There was: ${tickProvider.BufferSize()} ticks in TickProvider buffer.`);
+
+    tickProvider.Feed(ticks);
+
+    console.log(`There are: ${tickProvider.BufferSize()} ticks in TickProvider buffer.`);
+    lib.IndicatorTest.Init();
+    lib.IndicatorTest.Run();
+  }
+}
 
 export default class Chart extends React.Component {
 
   constructor(props) {
     super(props);
+
+    console.log ('before run test.');
+    run(Api, 'fx31337-wasm/dist/IndicatorTest');
 
     this.container = React.createRef();
 
