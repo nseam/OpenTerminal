@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "file-loader": "^6.2.0",
-    "fx31337-wasm": "^0.1.32",
+    "fx31337-wasm": "^0.1.34",
     "lightweight-charts": "^3.8.0",
     "next": "12.1.0",
     "null-loader": "^4.0.1",

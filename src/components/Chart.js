@@ -6,6 +6,11 @@
 
 console.log ('before imports');
 
+import contentJs from 'fx31337-wasm/dist/IndicatorTest.js';
+import contentWasm from 'fx31337-wasm/dist/IndicatorTest.wasm';
+
+console.log (contentJs);
+
 import styles from './Chart.module.css'
 import React, {useRef} from "react";
 import {createChart} from 'lightweight-charts';
@@ -56,7 +61,7 @@ export default class Chart extends React.Component {
     super(props);
 
     console.log ('before run test.');
-    run(Api, 'fx31337-wasm/dist/IndicatorTest');
+    run(Api, contentJs, contentWasm);
 
     this.container = React.createRef();
 

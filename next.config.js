@@ -18,7 +18,7 @@ const nextConfig = {
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.experiments = {
-      asyncWebAssembly: false,
+      asyncWebAssembly: true,
       layers: true,
     };
     config.module.rules.push({
@@ -33,6 +33,10 @@ const nextConfig = {
       test: /\.wasm$/,
       loader: "file-loader",
       type: "javascript/auto",
+      options: {
+        publicPath: '_next/static/wasm/',
+        outputPath: `static/wasm/`
+      }
     });
     return config;
   }
